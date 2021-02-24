@@ -37,15 +37,18 @@ time.sleep(2.0)
 
 image = cv2.imread(args["image"],1)
 print(f'shape = {image.shape}')
+t1 = time.time()
 upscaled = sr.upsample(image)
+t2 = time.time()
 bicubic = cv2.resize(image,
     (upscaled.shape[1], upscaled.shape[0]),
     interpolation=cv2.INTER_CUBIC)
-
+t3 = time.time()
 # show the original frame, bicubic interpolation frame, and super
 # resolution frame
+print(f'the time of SR: {round(t2-t1, 2)}, bicubic: {round(t3-t2, 2)}')
 cv2.imshow("Original", image)
 cv2.imshow("Bicubic", bicubic)
 cv2.imshow("Super Resolution", upscaled)
-cv2.imwrite("butterfly_SR.png", upscaled)
+cv2.imwrite("test_SR.png", upscaled)
 cv2.waitKey(0)
